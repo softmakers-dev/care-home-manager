@@ -1,0 +1,45 @@
+plugins {
+    id 'buildlogic.java-library-conventions'
+}
+
+group = 'com.softmakers'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':manager_domain')
+
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2' // for JSON parsing
+
+    implementation 'com.google.code.gson:gson:2.9.0'
+
+    compileOnly 'org.projectlombok:lombok:1.18.38'
+    annotationProcessor 'org.projectlombok:lombok:1.18.38'
+
+    implementation 'org.springframework:spring-beans:5.3.27'
+    implementation 'org.springframework:spring-context:5.3.27'
+    implementation 'org.springframework:spring-web:5.3.27'
+    implementation 'org.springframework.security:spring-security-core:6.5.1'
+    implementation 'org.springframework.boot:spring-boot-starter-mail:3.5.3'
+
+    implementation 'javax.validation:validation-api:2.0.1.Final'
+
+    implementation 'jakarta.servlet:jakarta.servlet-api:5.0.0'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+tasks.register("prepareKotlinBuildScriptModel"){}
