@@ -17,9 +17,6 @@ application-oauth.properties
 # BlueJ files
 *.ctxt
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
 # Package Files #
 *.jar
 *.war
@@ -63,23 +60,14 @@ application-oauth.properties
 # When using Gradle or Maven with auto-import, you should exclude module files,
 # since they will be recreated, and may cause churn.  Uncomment if using
 # auto-import.
-# .idea/artifacts
-# .idea/compiler.xml
-# .idea/jarRepositories.xml
-# .idea/modules.xml
-# .idea/*.iml
-# .idea/modules
-# *.iml
-# *.ipr
+ .idea/artifacts
+ .idea/compiler.xml
+ .idea/jarRepositories.xml
+ .idea/modules.xml
+ .idea/modules
 
 # CMake
 cmake-build-*/
-
-# Mongo Explorer plugin
-.idea/**/mongoSettings.xml
-
-# File-based project format
-*.iws
 
 # IntelliJ
 out/
@@ -106,3 +94,17 @@ fabric.properties
 .idea/httpRequests
 
 .DS_Store
+
+# AWS key-pair
+*.ppk
+*.pem
+
+# folders to be ignored
+.gradle/
+.idea/
+build/
+buildSrc/
+gradle/
+
+# Redis snapshot
+dump.rdb

@@ -28,6 +28,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
     implementation 'org.mariadb.jdbc:mariadb-java-client:3.5.3'
+    implementation 'com.github.mwiede:jsch:0.2.20'
 
     implementation 'org.hibernate.orm:hibernate-core:6.6.0.Final'
 
@@ -57,5 +58,5 @@ tasks.named('test') {
 tasks.register("prepareKotlinBuildScriptModel"){}
 
 application {
-    mainClass = 'com.softmakers.ManagerBootApplcation'
+    mainClass = 'com.softmakers.ManagerBootApplication'
 }

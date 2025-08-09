@@ -58,6 +58,8 @@ public class UserResource {
 
     @Value("${server-domain}")
     private String SERVER_DOMAIN;
+    @Value("${api-frontend-main-url}")
+    private String API_FRONTEND_MAIN_URL;
 
 
     public UserResource(AuthUtil authUtil, ServiceLifecycle serviceLifecycle, EmailCodeService emailCodeService) {
@@ -212,7 +214,9 @@ public class UserResource {
                                    HttpServletRequest request,
                                    @RequestParam("accessToken") String accessToken) throws IOException, IOException {
 
-        String frontendUrl = UriComponentsBuilder.fromUriString("http://localhost.com:5176/")
+//        String frontendUrl = UriComponentsBuilder.fromUriString("http://localhost.com:5176/")
+        log.info("API_FRONTEND_MAIN_URL: {}", API_FRONTEND_MAIN_URL);
+        String frontendUrl = UriComponentsBuilder.fromUriString(API_FRONTEND_MAIN_URL)
                 .queryParam("accessToken", accessToken)
                 .build().toUriString();
 

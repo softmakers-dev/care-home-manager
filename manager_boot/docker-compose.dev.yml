@@ -1,0 +1,25 @@
+version: '3.4'
+services:
+  redis:
+    container_name: 'redis-server'
+    image: 'redis'
+    ports:
+      - "6379:6379"
+  backend:
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+    volumes:
+      - ../care-home.pem:/app/keys/care-home.pem
+  frontend:
+    build:
+      context: /Users/michaelkim/workspace_frontend/care-home-typed
+      dockerfile: /Users/michaelkim/workspace_frontend/care-home-typed/Dockerfile.dev
+    ports:
+      - "5176:5176"
+    depends_on:
+      - backend

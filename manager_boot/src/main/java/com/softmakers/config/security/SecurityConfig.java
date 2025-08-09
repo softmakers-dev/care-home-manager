@@ -31,7 +31,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -51,7 +50,7 @@ public class SecurityConfig {
             "/configuration/security", "/swagger-ui.html", "/webjars/**", "/swagger-ui/**"};
     private static final String[] AUTH_WHITELIST_STATIC = {"/static/css/**", "/static/js/**", "/error", "/favicon.ico"};
     private static final String[] AUTH_WHITELIST = {
-            "/login", "/signup", "/login/oauth2/code/*",
+            "/login", "/signup", "/login/oauth2/code/*", "/findUsers",
             "/accounts/check", "/accounts/password/reset",
             "/accounts/email", "/accounts/email",
             "/swagger-ui.html", "/swagger/**", "/swagger-resources/**",
@@ -128,7 +127,10 @@ public class SecurityConfig {
     public CorsConfigurationSource configurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost.com:5176"));
+        configuration.setAllowedOrigins(Arrays.asList(
+                "http://localhost.com:5176",
+                "http://3.37.44.69:5176",
+                "http://ec2-3-37-44-69.ap-northeast-2.compute.amazonaws.com:5176"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Allow specific methods
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "access", "refresh")); // Allow specific headers
         configuration.setAllowCredentials(true);

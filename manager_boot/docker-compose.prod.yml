@@ -8,7 +8,7 @@ services:
   backend:
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     ports:
       - "8080:8080"
     depends_on:
@@ -19,10 +19,7 @@ services:
   frontend:
     build:
       context: ../../../workspace_frontend/care-home-typed
-      dockerfile: Dockerfile
-      args:
-        WINDOW_LOCATION_HREF: 'http://localhost:8080/care-home/oauth2/authorization/github'
-#        WINDOW_LOCATION_HREF: 'http://ec2-3-37-44-69.ap-northeast-2.compute.amazonaws.com:8080/care-home/oauth2/authorization/github'
+      dockerfile: Dockerfile.production
     ports:
       - "5176:80"
     depends_on:

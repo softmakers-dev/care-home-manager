@@ -1,0 +1,14 @@
+# Use a lightweight Java image as the base
+FROM openjdk:17-jdk-slim
+
+# Set working directory inside the container
+WORKDIR /app
+
+# Copy the built JAR from your project into the Docker image
+COPY /build/libs/*SNAPSHOT.jar app.jar
+
+# Expose the port your app runs on (e.g., 8080)
+EXPOSE 8080
+
+# Command to run the app
+ENTRYPOINT ["java", "-Dspring.profiles.active=dev", "-jar", "app.jar"]
