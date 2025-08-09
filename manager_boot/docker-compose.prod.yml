@@ -1,0 +1,30 @@
+version: '3.4'
+services:
+  redis:
+    container_name: 'redis-server'
+    image: 'redis'
+    ports:
+      - "6379:6379"
+  backend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+    volumes:
+      - ../care-home.pem:/app/keys/care-home.pem
+    image: softmakersdev029/care-home-backend:latest
+  frontend:
+    build:
+      context: ../../../workspace_frontend/care-home-typed
+      dockerfile: Dockerfile
+      args:
+        WINDOW_LOCATION_HREF: 'http://localhost:8080/care-home/oauth2/authorization/github'
+#        WINDOW_LOCATION_HREF: 'http://ec2-3-37-44-69.ap-northeast-2.compute.amazonaws.com:8080/care-home/oauth2/authorization/github'
+    ports:
+      - "5176:80"
+    depends_on:
+      - backend
+    image: softmakersdev029/care-home-frontend:latest
