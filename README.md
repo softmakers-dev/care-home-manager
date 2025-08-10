@@ -31,9 +31,8 @@ Backend for care-home service
 
 
 4. Access the app:
-- http://localhost.com:8080
+- http://ec2-3-37-44-69.ap-northeast-2.compute.amazonaws.com:5176/
 
-- 
 ## API Endpoints
 
 - List the main API endpoints and their purpose, for example:
