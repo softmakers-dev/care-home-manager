@@ -19,5 +19,6 @@ public class MemberProfile {
         this.memberId = user.getUser_id();
         this.memberUsername = user.getUserName();
         this.memberName = user.getUserName();
+        this.memberImageUrl =user.getUserImageUrl();
     }
 }

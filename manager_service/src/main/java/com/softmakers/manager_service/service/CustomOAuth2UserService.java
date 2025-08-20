@@ -5,7 +5,9 @@ import com.softmakers.manager_domain.lifecycle.ServiceLifecycle;
 import com.softmakers.manager_domain.spec.UserService;
 import com.softmakers.manager_service.dto.OAuth2UserInfo;
 import com.softmakers.manager_service.dto.PrincipalDetails;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
+@Slf4j
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
@@ -41,13 +44,17 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         User user = this.userService.findUserByUsername( oAuth2UserInfo.name() );
         if( user == null ) {
             user = new User();
+            user.setUserGender("P");
+            user.setUserImageName("base");
+            user.setUserImageType( "PNG" );
+            user.setUserImageUrl("https://instagram-s3-dev.s3.ap-northeast-2.amazonaws.com/member/base-UUID_base.PNG.png");
+            user.setUserImageUUID("base-UUID");
         }
 
         user.setUserName( oAuth2UserInfo.name() );
         user.setEmail( oAuth2UserInfo.email() != null ? oAuth2UserInfo.email() : "softmakers.dev@gmail.com" );
         user.setPassword( "passPass" );
-        this.userService.addUser(user);
-
+        boolean isRegistered = this.userService.addUser(user);
         User newUser = this.userService.findUserByUsername( oAuth2UserInfo.name() );
         return newUser;
     }

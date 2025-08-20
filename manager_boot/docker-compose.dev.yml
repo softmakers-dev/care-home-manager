@@ -19,6 +19,9 @@ services:
     build:
       context: /Users/michaelkim/workspace_frontend/care-home-typed
       dockerfile: /Users/michaelkim/workspace_frontend/care-home-typed/Dockerfile.dev
+    volumes:
+      - /Users/michaelkim/workspace_frontend/care-home-typed:/app
+      - /app/node-modules
     ports:
       - "5176:5176"
     depends_on:

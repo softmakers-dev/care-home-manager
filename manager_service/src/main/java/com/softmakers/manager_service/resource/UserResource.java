@@ -1,6 +1,5 @@
 package com.softmakers.manager_service.resource;
 
-import com.google.gson.JsonObject;
 import com.softmakers.error.exception.FilterMustRespondException;
 import com.softmakers.manager_domain.entity.dto.LoginRequest;
 import com.softmakers.manager_domain.entity.dto.redis.RefreshToken;
@@ -9,6 +8,8 @@ import com.softmakers.manager_service.dto.RegisterRequest;
 import com.softmakers.manager_service.dto.SendConfirmationEmailRequest;
 import com.softmakers.manager_service.dto.UpdatePasswordRequest;
 import com.softmakers.manager_service.service.EmailCodeService;
+import com.softmakers.manager_store.aws.S3Uploader;
+import com.softmakers.manager_store.vo.Image;
 import com.softmakers.result.ResultCode;
 import com.softmakers.result.ResultResponse;
 import com.softmakers.manager_domain.entity.User;
@@ -29,17 +30,15 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static com.softmakers.result.ResultCode.*;
@@ -50,11 +49,14 @@ import static com.softmakers.result.ResultCode.*;
 @RequestMapping(value = "/")
 public class UserResource {
 
+    private static final String USER_S3_DIRNAME = "user";
+
     private UserService userService;
     private RefreshTokenService refreshTokenService;
     private final ServiceLifecycle serviceLifecycle;
     private final AuthUtil authUtil;
     private final EmailCodeService emailCodeService;
+    private final S3Uploader s3Uploader;
 
     @Value("${server-domain}")
     private String SERVER_DOMAIN;
@@ -62,10 +64,16 @@ public class UserResource {
     private String API_FRONTEND_MAIN_URL;
 
 
-    public UserResource(AuthUtil authUtil, ServiceLifecycle serviceLifecycle, EmailCodeService emailCodeService) {
+    public UserResource(
+            AuthUtil authUtil,
+            ServiceLifecycle serviceLifecycle,
+            EmailCodeService emailCodeService,
+            S3Uploader s3Uploader) {
+
         this.authUtil = authUtil;
         this.serviceLifecycle = serviceLifecycle;
         this.emailCodeService = emailCodeService;
+        this.s3Uploader = s3Uploader;
         this.userService = this.serviceLifecycle.requestUserService();
         this.refreshTokenService = this.serviceLifecycle.requestRefreshTokenService();
     }
@@ -214,12 +222,35 @@ public class UserResource {
                                    HttpServletRequest request,
                                    @RequestParam("accessToken") String accessToken) throws IOException, IOException {
 
-//        String frontendUrl = UriComponentsBuilder.fromUriString("http://localhost.com:5176/")
-        log.info("API_FRONTEND_MAIN_URL: {}", API_FRONTEND_MAIN_URL);
         String frontendUrl = UriComponentsBuilder.fromUriString(API_FRONTEND_MAIN_URL)
                 .queryParam("accessToken", accessToken)
                 .build().toUriString();
 
         response.sendRedirect(frontendUrl);
+    }
+
+    @PostMapping("/accounts/image")
+    public ResponseEntity<ResultResponse> uploadImage( @RequestParam("uploadImage") MultipartFile uploadImage ) {
+        final User user = this.userService.findUserById( new BigDecimal(authUtil.getLoginUserId()) );
+        final String userImageUrl = user.getUserImageUrl();
+        if( userImageUrl != null ) {
+            s3Uploader.deleteImage(
+                    user.getUserImageUUID(),
+                    user.getUserImageName(),
+                    user.getUserImageType(),
+                    USER_S3_DIRNAME);
+        }
+
+        final Image image = s3Uploader.uploadImage( uploadImage, USER_S3_DIRNAME );
+        log.info("image.getImageUrl: {}", image.getImageUrl());
+        if( image != null ){
+            user.setUserImageUrl( image.getImageUrl() );
+            user.setUserImageName( image.getImageName() );
+            user.setUserImageType( image.getImageType().toString() );
+            user.setUserImageUUID( image.getImageUUID() );
+        }
+        this.userService.addUser( user );
+
+        return ResponseEntity.ok( ResultResponse.of( UPLOAD_MEMBER_IMAGE_SUCCESS ) );
     }
 }

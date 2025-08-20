@@ -16,3 +16,11 @@ include('manager_domain')
 include('manager_service')
 include('manager_store')
 include(':utilities')
+
+// settings.gradle (Gradle 7+)
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        // add other repos if needed
+    }
+}

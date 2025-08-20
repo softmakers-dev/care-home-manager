@@ -14,6 +14,8 @@ import com.softmakers.result.ResultCode;
 import com.softmakers.utilities.AuthUtil;
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -40,6 +42,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -51,10 +54,8 @@ public class SecurityConfig {
     private static final String[] AUTH_WHITELIST_STATIC = {"/static/css/**", "/static/js/**", "/error", "/favicon.ico"};
     private static final String[] AUTH_WHITELIST = {
             "/login", "/signup", "/login/oauth2/code/*", "/findUsers",
-            "/accounts/check", "/accounts/password/reset",
-            "/accounts/email", "/accounts/email",
-            "/swagger-ui.html", "/swagger/**", "/swagger-resources/**",
-            "/swagger-ui/**" };
+            "/accounts/check", "/accounts/password/reset", "/accounts/email",
+            "/swagger-ui.html", "/swagger/**", "/swagger-resources/**", "/swagger-ui/**" };
 
     private final AuthUtil authUtil;
     private final CustomUserDetailsService jwtUserDetailsService;
@@ -70,6 +71,8 @@ public class SecurityConfig {
 //    private final DaoAuthenticationProvider daoAuthenticationProvider;
     // Filter
     private final CustomExceptionHandleFilter customExceptionHandleFilter;
+    @Value("${api-frontend-main-url}")
+    private String API_FRONTEND_MAIN_URL;
 
     @Bean
     public static PasswordEncoder passwordEncoder(){
@@ -127,10 +130,7 @@ public class SecurityConfig {
     public CorsConfigurationSource configurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(Arrays.asList(
-                "http://localhost.com:5176",
-                "http://3.37.44.69:5176",
-                "http://ec2-3-37-44-69.ap-northeast-2.compute.amazonaws.com:5176"));
+        configuration.setAllowedOrigins(Arrays.asList(API_FRONTEND_MAIN_URL));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Allow specific methods
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "access", "refresh")); // Allow specific headers
         configuration.setAllowCredentials(true);

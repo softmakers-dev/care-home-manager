@@ -118,9 +118,12 @@ public class UserJpaStore implements UserStore {
 
     @Override
     public User retrieveUserByUsername(String userName) {
+        log.info("userName: {}", userName);
         Optional<UserJpo> userJpoOptional = this.userRepository.findUserByUserName( userName );
+        log.info("userJpoOptional completed");
         if ( userJpoOptional.isPresent() ) {
             UserJpo userJpo = userJpoOptional.get();
+            log.info("userJpo completed");
             return userJpo.toDomain();
         }
 

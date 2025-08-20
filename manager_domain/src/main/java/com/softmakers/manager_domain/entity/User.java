@@ -19,6 +19,14 @@ public class User {
     private String email;
     private String password;
     private String userName;
+
+    private String userImageUrl;
+    private String userImageType;
+    private String userImageName;
+    private String userImageUUID;
+
+    private String userGender;
+
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
