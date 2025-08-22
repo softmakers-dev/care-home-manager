@@ -101,7 +101,7 @@ public class UserResource {
 
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             user.setPassword(encoder.encode(registerRequest.getPassword()));
-
+            log.info("new user created!");
             isRegistered = this.userService.addUser(user);
         }
 
@@ -220,7 +220,7 @@ public class UserResource {
     @GetMapping("/oauth/success")
     public void handleOAuthSuccess(HttpServletResponse response,
                                    HttpServletRequest request,
-                                   @RequestParam("accessToken") String accessToken) throws IOException, IOException {
+                                   @RequestParam("accessToken") String accessToken) throws IOException {
 
         String frontendUrl = UriComponentsBuilder.fromUriString(API_FRONTEND_MAIN_URL)
                 .queryParam("accessToken", accessToken)
@@ -242,7 +242,6 @@ public class UserResource {
         }
 
         final Image image = s3Uploader.uploadImage( uploadImage, USER_S3_DIRNAME );
-        log.info("image.getImageUrl: {}", image.getImageUrl());
         if( image != null ){
             user.setUserImageUrl( image.getImageUrl() );
             user.setUserImageName( image.getImageName() );

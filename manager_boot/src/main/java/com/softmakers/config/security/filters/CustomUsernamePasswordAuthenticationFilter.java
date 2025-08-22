@@ -1,6 +1,7 @@
 package com.softmakers.config.security.filters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 
 import jakarta.servlet.ServletException;
@@ -18,6 +19,7 @@ import java.io.IOException;
 
 import com.softmakers.manager_domain.entity.dto.LoginRequest;
 
+@Slf4j
 public class CustomUsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
     private static final AntPathRequestMatcher ANT_PATH_REQUEST_MATCHER =
@@ -30,7 +32,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends AbstractAuthenti
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws
-            AuthenticationException, IOException, ServletException {
+            AuthenticationException {
 
         if ( !request.getMethod().equals("POST") ) {
             throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());

@@ -68,7 +68,7 @@ public class S3Uploader {
         return PutObjectRequest.builder()
                 .bucket(bucket)
                 .key(fileName)
-                .acl(ObjectCannedACL.PUBLIC_READ)
+//                .acl(ObjectCannedACL.PUBLIC_READ)
                 .build();
     }
 

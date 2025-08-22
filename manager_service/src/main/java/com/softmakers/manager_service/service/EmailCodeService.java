@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
 public class EmailCodeService {
 
     private static final int REGISTER_CODE_LENGTH = 6;
-    private static final String REGISTER_EMAIL_SUBJECT_POSTFIX = ", Welcome to Instagram.";
+    private static final String REGISTER_EMAIL_SUBJECT_POSTFIX = ", Welcome to Care-Home.";
 
     private final EmailService emailService;
     private final RegisterCodeRedisService registerCodeRedisService;

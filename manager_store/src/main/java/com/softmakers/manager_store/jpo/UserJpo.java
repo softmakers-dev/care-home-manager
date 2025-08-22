@@ -58,15 +58,13 @@ public class UserJpo {
     public UserJpo(User user) {
         BeanUtils.copyProperties(user, this);
         if( user != null ) {
-            this.gender = Gender.valueOf( user.getUserGender() );
+            this.gender = Gender.valueOf( user.getUserGender() != null ? user.getUserGender() : "P" );
             this.image = Image.builder()
-                    .imageName( user.getUserImageName() )
-                    .imageType( ImageType.valueOf(user.getUserImageType()) )
-                    .imageUrl( user.getUserImageUrl() )
-                    .imageUUID( user.getUserImageUUID() )
+                    .imageName( user.getUserImageName() != null ? user.getUserImageName() : "base" )
+                    .imageType( ImageType.valueOf( user.getUserImageType() != null ? user.getUserImageType() : "PNG" ) )
+                    .imageUrl( user.getUserImageUrl() != null ? user.getUserImageUrl() : "https://instagram-s3-dev.s3.ap-northeast-2.amazonaws.com/member/base-UUID_base.PNG.png" )
+                    .imageUUID( user.getUserImageUUID() != null ? user.getUserImageUUID() : "base-UUID" )
                     .build();
-            log.info("image.getImageUUID: {}", image.getImageUUID());
-            log.info("image.getImageName: {}", image.getImageName());
         } else {
             // default initialize
             this.gender = Gender.P;
