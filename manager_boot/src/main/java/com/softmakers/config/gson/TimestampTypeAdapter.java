@@ -1,11 +1,15 @@
 package com.softmakers.config.gson;
 
 import com.google.gson.*;
+
 import java.lang.reflect.Type;
+
 import java.sql.Timestamp;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import java.util.Date;
 
 // Custom TypeAdapter for java.sql.Timestamp

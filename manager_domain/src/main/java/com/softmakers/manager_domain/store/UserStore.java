@@ -13,4 +13,5 @@ public interface UserStore {
     public User retrieveUserById( BigDecimal id );
     public boolean savePassword( String oldPassword, String newPassword );
     public User retrieveUserByUsername( String userName );
+    public User retrieveLoginUser();
 }

@@ -42,6 +42,11 @@ dependencies {
     implementation platform("software.amazon.awssdk:bom:2.27.21")
     implementation "software.amazon.awssdk:s3"
 
+    implementation 'com.querydsl:querydsl-core:5.0.0'
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta' // Use the Jakarta classifier
+
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
     implementation project(':manager_service')
     implementation project(':manager_domain')
     implementation project(':utilities')

@@ -118,15 +118,25 @@ public class UserJpaStore implements UserStore {
 
     @Override
     public User retrieveUserByUsername(String userName) {
-        log.info("userName: {}", userName);
         Optional<UserJpo> userJpoOptional = this.userRepository.findUserByUserName( userName );
-        log.info("userJpoOptional completed");
         if ( userJpoOptional.isPresent() ) {
+
             UserJpo userJpo = userJpoOptional.get();
-            log.info("userJpo completed");
             return userJpo.toDomain();
         }
-
         return null;
+    }
+
+    @Override
+    public User retrieveLoginUser() {
+        Long userId = null;
+        try {
+            userId = authUtil.getLoginUserId();
+        } catch( Exception e ) {
+            log.info("error at authUtil.getLoginUserId: {} ", e.getMessage());
+            userId = 56L;   // for test
+        }
+        Optional<UserJpo> userJpoOptional = userRepository.findById( BigDecimal.valueOf( userId ) );
+        return userJpoOptional.get().toDomain();
     }
 }

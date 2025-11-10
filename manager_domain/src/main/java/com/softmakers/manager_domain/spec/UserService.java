@@ -13,4 +13,5 @@ public interface UserService {
     public User findUserById( BigDecimal id );
     public boolean changePassword( String oldPassword, String newPassword );
     public User findUserByUsername( String userName );
+    public User findLoginUser();
 }

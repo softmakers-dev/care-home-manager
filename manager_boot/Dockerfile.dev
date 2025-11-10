@@ -1,5 +1,6 @@
 # Use a lightweight Java image as the base
-FROM openjdk:17-jdk-slim
+# FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk-jammy
 
 # Set working directory inside the container
 WORKDIR /app
@@ -11,4 +12,5 @@ COPY /build/libs/*SNAPSHOT.jar app.jar
 EXPOSE 8080
 
 # Command to run the app
-ENTRYPOINT ["java", "-Dspring.profiles.active=dev", "-jar", "app.jar"]
+# ENTRYPOINT ["java", "-Dspring.profiles.active=dev", "-jar", "app.jar"]
+CMD ["java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "app.jar"]

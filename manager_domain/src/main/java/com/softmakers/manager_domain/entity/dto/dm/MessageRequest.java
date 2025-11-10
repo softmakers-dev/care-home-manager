@@ -1,0 +1,20 @@
+package com.softmakers.manager_domain.entity.dto.dm;
+
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor
+public class MessageRequest {
+
+    @NotNull(message = "채팅방 PK는 필수입니다.")
+    private Long roomId;
+
+    @NotNull(message = "메시지를 보내는 회원 PK는 필수입니다.")
+    private Long senderId;
+
+    @NotEmpty(message = "채팅 메시지는 필수입니다.")
+    private String content;
+}

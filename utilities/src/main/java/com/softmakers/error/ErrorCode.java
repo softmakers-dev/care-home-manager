@@ -40,8 +40,33 @@ public enum ErrorCode {
     JWT_EXPIRED(401, "J002", "만료된 토큰입니다."),
     EXPIRED_REFRESH_TOKEN(401, "J003", "만료된 REFRESH 토큰입니다. 재로그인 해주십시오."),
 
+    // Feed
+    POST_NOT_FOUND(400, "F001", "존재하지 않는 게시물입니다."),
+    POST_CANT_DELETE(400, "F002", "게시물 게시자만 삭제할 수 있습니다."),
+    POST_LIKE_NOT_FOUND(400, "F003", "해당 게시물에 좋아요를 누르지 않은 회원입니다."),
+    POST_LIKE_ALREADY_EXIST(400, "F004", "해당 게시물에 이미 좋아요를 누른 회원입니다."),
+    POST_IMAGES_AND_ALT_TEXTS_MISMATCH(400, "F005", "게시물 이미지 개수와 대체 텍스트 개수는 동일해야 합니다."),
+    BOOKMARK_ALREADY_EXIST(400, "F006", "이미 해당 게시물을 저장하였습니다."),
+    BOOKMARK_NOT_FOUND(400, "F007", "아직 해당 게시물을 저장하지 않았습니다."),
+    COMMENT_NOT_FOUND(400, "F008", "존재하지 않는 댓글입니다."),
+    COMMENT_CANT_DELETE(400, "F009", "타인이 작성한 댓글은 삭제할 수 없습니다."),
+    COMMENT_LIKE_ALREADY_EXIST(400, "F010", "해당 댓글에 이미 좋아요를 누른 회원입니다."),
+    COMMENT_LIKE_NOT_FOUND(400, "F011", "해당 댓글에 좋아요를 누르지 않은 회원입니다."),
+    COMMENT_CANT_UPLOAD(400, "F012", "댓글 기능이 해제된 게시물에는 댓글을 작성할 수 없습니다."),
+    REPLY_CANT_UPLOAD(400, "F013", "최상위 댓글에만 답글을 업로드할 수 있습니다."),
+    POST_TAGS_EXCEED(400, "F014", "사용자 태그는 최대 20명까지 가능합니다."),
+
     // Email
     EMAIL_SEND_FAIL(500, "E001", "이메일 전송 중 오류가 발생했습니다."),
+
+    // Chat
+    CHAT_ROOM_NOT_FOUND(400, "C001", "존재하지 않는 채팅방입니다."),
+    JOIN_ROOM_NOT_FOUND(400, "C002", "해당 채팅방에 참여하지 않은 회원입니다."),
+    MESSAGE_IMAGE_INVALID(400, "C003", "메시지로 전송할 이미지는 필수입니다."),
+    MESSAGE_NOT_FOUND(400, "C004", "존재하지 않는 메시지입니다."),
+    MESSAGE_SENDER_MISMATCH(400, "C005", "해당 메시지를 전송한 회원이 아닙니다."),
+    MESSAGE_LIKE_ALREADY_EXIST(400, "C006", "해당 메시지를 이미 좋아요한 회원입니다."),
+    MESSAGE_LIKE_NOT_FOUND(400, "C007", "해당 메시지를 좋아요하지 않은 회원입니다."),
     ;
 
     private final int status;

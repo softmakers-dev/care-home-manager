@@ -1,5 +1,8 @@
 package com.softmakers.manager_domain.entity;
 
+import com.querydsl.core.annotations.QueryProjection;
+import com.querydsl.core.types.dsl.NumberPath;
+import com.querydsl.core.types.dsl.StringPath;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,5 +38,17 @@ public class User {
         this.password = password;
         this.userName = user_name;
         this.createdAt = Timestamp.from( Instant.now() );
+    }
+
+    public User( BigDecimal user_id, String userName ) {
+        this.user_id = user_id;
+        this.userName = userName;
+    }
+
+    @QueryProjection
+    public User(BigDecimal user_id, String userName, String userImageUrl) {
+        this.user_id = user_id;
+        this.userName = userName;
+        this.userImageUrl = userImageUrl;
     }
 }

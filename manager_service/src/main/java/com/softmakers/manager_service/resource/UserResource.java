@@ -49,7 +49,8 @@ import static com.softmakers.result.ResultCode.*;
 @RequestMapping(value = "/")
 public class UserResource {
 
-    private static final String USER_S3_DIRNAME = "user";
+    @Value("cloud.aws.s3.drive")
+    private String USER_S3_DIRNAME;
 
     private UserService userService;
     private RefreshTokenService refreshTokenService;

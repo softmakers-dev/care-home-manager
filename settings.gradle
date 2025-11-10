@@ -21,6 +21,5 @@ include(':utilities')
 dependencyResolutionManagement {
     repositories {
         mavenCentral()
-        // add other repos if needed
     }
 }

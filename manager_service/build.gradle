@@ -21,6 +21,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.9.0'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client:3.5.0'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.5.3'
 
     compileOnly 'org.projectlombok:lombok:1.18.38'
     annotationProcessor 'org.projectlombok:lombok:1.18.38'
@@ -30,6 +31,8 @@ dependencies {
     implementation project(':manager_domain')
     implementation project(':manager_store')
     implementation project(':utilities')
+
+    implementation 'org.springframework.boot:spring-boot-starter-websocket:3.5.6'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test:3.5.0'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

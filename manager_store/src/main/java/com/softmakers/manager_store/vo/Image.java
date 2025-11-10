@@ -10,7 +10,7 @@ import java.util.Objects;
 @Builder
 @Embeddable
 @AllArgsConstructor
-@NoArgsConstructor( access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Image {
 
     @Lob

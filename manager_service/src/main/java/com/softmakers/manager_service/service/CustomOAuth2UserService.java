@@ -42,20 +42,20 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private User getOrSave( OAuth2UserInfo oAuth2UserInfo ) {
         User user = this.userService.findUserByUsername( oAuth2UserInfo.name() );
+
         if( user == null ) {
             user = new User();
+            user.setUserName( oAuth2UserInfo.name() );
+            user.setEmail( oAuth2UserInfo.email() != null ? oAuth2UserInfo.email() : "softmakers.dev@gmail.com" );
+            user.setPassword( "passPass" );
             user.setUserGender("P");
             user.setUserImageName("base");
             user.setUserImageType( "PNG" );
             user.setUserImageUrl("https://instagram-s3-dev.s3.ap-northeast-2.amazonaws.com/member/base-UUID_base.PNG.png");
             user.setUserImageUUID("base-UUID");
+            boolean isRegistered = this.userService.addUser(user);
         }
-
-        user.setUserName( oAuth2UserInfo.name() );
-        user.setEmail( oAuth2UserInfo.email() != null ? oAuth2UserInfo.email() : "softmakers.dev@gmail.com" );
-        user.setPassword( "passPass" );
-        boolean isRegistered = this.userService.addUser(user);
-        User newUser = this.userService.findUserByUsername( oAuth2UserInfo.name() );
-        return newUser;
+//        User newUser = this.userService.findUserByUsername( oAuth2UserInfo.name() );
+        return user;
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Configuration
 public class GsonConfig {
@@ -13,7 +14,8 @@ public class GsonConfig {
     @Bean
     public Gson gson() {
         return new GsonBuilder()
-                .registerTypeAdapter(Timestamp.class, new TimestampTypeAdapter())
+                .registerTypeAdapter( Timestamp.class, new TimestampTypeAdapter() )
+                .registerTypeAdapter( LocalDateTime.class, new LocalDateTimeAdapter() )
                 .create();
     }
 }

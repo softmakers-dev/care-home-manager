@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -42,6 +43,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
+//@Profile("!dev")
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -54,7 +56,11 @@ public class SecurityConfig {
     private static final String[] AUTH_WHITELIST = {
             "/login", "/signup", "/login/oauth2/code/*", "/findUsers",
             "/accounts/check", "/accounts/password/reset", "/accounts/email",
-            "/swagger-ui.html", "/swagger/**", "/swagger-resources/**", "/swagger-ui/**" };
+            "/swagger-ui.html", "/swagger/**", "/swagger-resources/**", "/swagger-ui/**",
+            "/ws-connection/**"
+//            , "/account/*", "/comments" // for local test
+//            ,"/p/*" // for local test
+    };
 
     private final AuthUtil authUtil;
     private final CustomUserDetailsService jwtUserDetailsService;
@@ -138,6 +144,7 @@ public class SecurityConfig {
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+        source.registerCorsConfiguration("/ws-connection/**", configuration); // Ensure explicit mapping for WebSocket endpoint
 
         return source;
     }

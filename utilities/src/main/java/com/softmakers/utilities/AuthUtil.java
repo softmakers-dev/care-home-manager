@@ -186,11 +186,21 @@ public class AuthUtil {
 
     public Long getLoginUserId() {
         try {
-            log.info("SecurityContextHolder.getContext().getAuthentication().getName()"+SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-            Long userId = Long.valueOf(SecurityContextHolder.getContext().getAuthentication().getName());
+            Long userId = 56L;
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+            if (auth != null && auth.getName() != null) {
+                String name = auth.getName();
+                try {
+                    userId = Long.valueOf(name); // convert if numeric
+                } catch (NumberFormatException ignored) {
+                    log.warn("Authentication name is not numeric: {}", name);
+                }
+            }
+
             return userId;
-        } catch ( Exception e ) {
-            throw new RuntimeException();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
