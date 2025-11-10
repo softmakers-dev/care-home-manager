@@ -108,3 +108,7 @@ gradle/
 
 # Redis snapshot
 dump.rdb
+
+# --- Generated QueryDSL Folder ---
+# Replace 'src/main/generated' with your actual path
+/manager_store/src/generated/
